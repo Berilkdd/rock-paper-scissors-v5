@@ -14,7 +14,14 @@ const hands = {
   scissors,
 };
 
+const beats = {
+  rock: "scissors",
+  paper: "rock",
+  scissors: "paper",
+};
+
 function App() {
+
   const [playerScore, setPlayerScore] = useState(0);
   const [computerScore, setComputerScore] = useState(0);
   const [drawScore, setDrawScore] = useState(0);
@@ -22,6 +29,7 @@ function App() {
   const [message, setMessage] = useState("Choose rock, paper or scissors to start!");
   const [playerHand, setPlayerHand] = useState("rock");
   const [computerHand, setComputerHand] = useState("rock");
+  const [result, setResult] = useState("");
 
   function getComputerChoice() {
     const choices = ["rock", "paper", "scissors"];
@@ -33,6 +41,16 @@ function App() {
   function handlePlayerChoice(choice) {
     setPlayerHand(choice);
     getComputerChoice();
+  }
+
+  function getResult() {
+    if (playerHand === computerHand) {
+      setResult("draw");
+    } else if (beats[playerHand] === computerHand) {
+      setResult("win");
+    } else {
+      setResult("lose");
+    }
   }
 
   return (
