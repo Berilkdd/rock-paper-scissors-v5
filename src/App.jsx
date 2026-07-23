@@ -8,7 +8,11 @@ import rockButton from "./assets/images/rock-button.png";
 import paperButton from "./assets/images/paper-button.png";
 import scissorsButton from "./assets/images/scissors-button.png";
 
-
+const hands = {
+  rock,
+  paper,
+  scissors,
+};
 
 function App() {
   const [playerScore, setPlayerScore] = useState(0);
@@ -16,8 +20,20 @@ function App() {
   const [drawScore, setDrawScore] = useState(0);
   const [header, setHeader] = useState("Ready?");
   const [message, setMessage] = useState("Choose rock, paper or scissors to start!");
-  const [playerHand, setPlayerHand] = useState(rock);
-  const [computerHand, setComputerHand] = useState(rock);
+  const [playerHand, setPlayerHand] = useState("rock");
+  const [computerHand, setComputerHand] = useState("rock");
+
+  function getComputerChoice() {
+    const choices = ["rock", "paper", "scissors"];
+    const index = Math.floor(Math.random() * choices.length);
+
+    setComputerHand(choices[index]);
+  }
+
+  function handlePlayerChoice(choice) {
+    setPlayerHand(choice);
+    getComputerChoice();
+  }
 
   return (
     <>
@@ -27,11 +43,11 @@ function App() {
       <div className="game-area">
         <div id="hands" className="hands-row">
           <div className="player-side">
-            <img src={playerHand} id="player-hand" className="hand"/>
+            <img src={hands[playerHand]} id="player-hand" className="hand"/>
           </div>
 
           <div className="computer-side">
-            <img src={computerHand} id="computer-hand" className="mirror hand"/>
+            <img src={hands[computerHand]} id="computer-hand" className="mirror hand"/>
           </div>
         </div>
 
@@ -39,15 +55,15 @@ function App() {
           <p id="player-message">Make your move!</p>
 
           <div className="choices">
-            <button className="choice-btn">
-              <img src={rockButton} alt="Rock" />
+            <button className="choice-btn" onClick={() => handlePlayerChoice("rock")}>              
+            <img src={rockButton} alt="Rock" />
             </button>
 
-            <button className="choice-btn">
+            <button className="choice-btn" onClick={() => handlePlayerChoice("paper")}>
               <img src={paperButton} alt="Paper" />
             </button>
 
-            <button className="choice-btn">
+            <button className="choice-btn" onClick={() => handlePlayerChoice("scissors")}>
               <img src={scissorsButton} alt="Scissors" />
             </button>
           </div>
