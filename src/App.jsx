@@ -14,20 +14,24 @@ function App() {
   const [playerScore, setPlayerScore] = useState(0);
   const [computerScore, setComputerScore] = useState(0);
   const [drawScore, setDrawScore] = useState(0);
+  const [header, setHeader] = useState("Ready?");
+  const [message, setMessage] = useState("Choose rock, paper or scissors to start!");
+  const [playerHand, setPlayerHand] = useState(rock);
+  const [computerHand, setComputerHand] = useState(rock);
 
   return (
     <>
-      <h1 id="header"></h1>
-      <h2 id="message"></h2>
+      <h1>{header}</h1>
+      <h2>{message}</h2>
 
       <div className="game-area">
         <div id="hands" className="hands-row">
           <div className="player-side">
-            <img src={rock} id="player-hand" className="hand"/>
+            <img src={playerHand} id="player-hand" className="hand"/>
           </div>
 
           <div className="computer-side">
-            <img src={rock} id="computer-hand" className="mirror hand"/>
+            <img src={computerHand} id="computer-hand" className="mirror hand"/>
           </div>
         </div>
 
