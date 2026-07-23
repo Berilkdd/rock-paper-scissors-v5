@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import rock from "./assets/images/rock.png";
 import paper from "./assets/images/paper.png";
 import scissors from "./assets/images/scissors.png";
@@ -9,6 +11,10 @@ import scissorsButton from "./assets/images/scissors-button.png";
 
 
 function App() {
+  const [playerScore, setPlayerScore] = useState(0);
+  const [computerScore, setComputerScore] = useState(0);
+  const [drawScore, setDrawScore] = useState(0);
+
   return (
     <>
       <h1 id="header"></h1>
@@ -29,24 +35,31 @@ function App() {
           <p id="player-message">Make your move!</p>
 
           <div className="choices">
-            <img src={rockButton} id="rock" alt="Rock" class="choice-btn" tabindex="0"></img>
-            <img src={paperButton} id="rock" alt="Rock" class="choice-btn" tabindex="0"></img>
-            <img src={scissorsButton} id="rock" alt="Rock" class="choice-btn" tabindex="0"></img>
+            <button className="choice-btn">
+              <img src={rockButton} alt="Rock" />
+            </button>
 
+            <button className="choice-btn">
+              <img src={paperButton} alt="Paper" />
+            </button>
+
+            <button className="choice-btn">
+              <img src={scissorsButton} alt="Scissors" />
+            </button>
           </div>
         </div>
 
         <div id="scoreboard">
           <p>
-            WON: <span id="player-score">0</span>
+            WON: <span>{playerScore}</span>
           </p>
 
           <p>
-            LOST: <span id="computer-score">0</span>
+            LOST: <span>{computerScore}</span>
           </p>
 
           <p>
-            DRAW: <span id="draw-score">0</span>
+            DRAW: <span>{drawScore}</span>
           </p>
         </div>
 
