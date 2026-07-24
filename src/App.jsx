@@ -89,10 +89,18 @@ function App() {
     requestAnimationFrame(update);
   }
 
+  function resetHands() {
+    setHands({
+      player: "rock",
+      computer: "rock",
+    });
+  }
+
   function playRound(choice) {
-    setIsPlaying(true);
+    setIsPlaying(false);
     resetHands();
     shake(() => {
+      setIsPlaying(true);
       getHands(choice);
     });
   }
@@ -110,42 +118,35 @@ function App() {
 
   function getResult() {
     if (hands.player === hands.computer) {
-      setResult("draw");
+      return "draw";
     } else if (beats[hands.player] === hands.computer) {
-      setResult("win");
+      return "win";
     } else {
-      setResult("lose");
-    }
-  }  
-
-  function updateScore() {
-    if (result === "win") {
-      setPlayerScore(score => score + 1);
-    } else if (result === "lose") {
-      setComputerScore(score => score + 1);    
-    } else if (result === "draw") {
-      setDrawScore(score => score + 1);   
+      return "lose";
     }
   }
 
-  function updateTexts() { 
-    if (result === "win") {
+  function updateScore(currentResult) {
+    if (currentResult === "win") {
+      setPlayerScore(score => score + 1);
+    } else if (currentResult === "lose") {
+      setComputerScore(score => score + 1);
+    } else {
+      setDrawScore(score => score + 1);
+    }
+  }
+
+  function updateTexts(currentResult) {
+    if (currentResult === "win") {
       setHeader("VICTORY!");
       setMessage("YOU CRUSHED THE COMPUTER");
-    } else if (result === "lose") {
+    } else if (currentResult === "lose") {
       setHeader("OUCH!");
       setMessage("BETTER LUCK NEXT TIME");
-    } else if (result === "draw") {
+    } else {
       setHeader("DRAW!");
       setMessage("TRY AGAIN FOR GLORY");
     }
-  }
-
-  function resetHands() {
-    setHands({
-      player: "rock",
-      computer: "rock",
-    });
   }
 
   function restartGame() {
@@ -165,17 +166,14 @@ function App() {
   useEffect(() => {
     if (!isPlaying) return;
 
-    getResult();
+    const currentResult = getResult();
+
+    setResult(currentResult);
+    updateScore(currentResult);
+    updateTexts(currentResult);
+
   }, [hands, isPlaying]);
-
-  useEffect(() => {
-    updateScore();
-  }, [result]);
-
-  useEffect(() => {
-    updateTexts();
-  }, [result]);  
-
+  
   return (
     <>
       <h1>{header}</h1>
@@ -196,16 +194,16 @@ function App() {
           <p id="player-message">Make your move!</p>
 
           <div className="choices">
-            <button className="choice-btn" onClick={() => playRound("rock")}>              
-            <img src={rockButton} alt="Rock" />
+            <button onClick={() => playRound("rock")}>              
+            <img className="choice-btn" src={rockButton} alt="Rock" />
             </button>
 
-            <button className="choice-btn" onClick={() => playRound("paper")}>
-              <img src={paperButton} alt="Paper" />
+            <button onClick={() => playRound("paper")}>
+              <img className="choice-btn" src={paperButton} alt="Paper" />
             </button>
 
-            <button className="choice-btn" onClick={() => playRound("scissors")}>
-              <img src={scissorsButton} alt="Scissors" />
+            <button onClick={() => playRound("scissors")}>
+              <img className="choice-btn" src={scissorsButton} alt="Scissors" />
             </button>
           </div>
         </div>
