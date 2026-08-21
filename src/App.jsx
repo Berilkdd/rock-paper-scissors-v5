@@ -32,7 +32,6 @@ function App() {
     computer: "rock",
   });
 
-  const [result, setResult] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const playerHandRef = useRef(null);
   const computerHandRef = useRef(null);
@@ -159,8 +158,7 @@ function App() {
     setHeader("Ready?");
     setMessage("Choose rock, paper or scissors to start!");
 
-    resetHands();
-    setResult(null);
+    resetHands();    
   }
 
   useEffect(() => {
@@ -168,7 +166,6 @@ function App() {
 
     const currentResult = getResult();
 
-    setResult(currentResult);
     updateScore(currentResult);
     updateTexts(currentResult);
 
